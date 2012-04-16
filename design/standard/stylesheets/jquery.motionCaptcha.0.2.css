@@ -1,0 +1,23 @@
+/**
+ * jQuery MotionCAPTCHA Plugin CSS
+ * josscrowcroft.com/projects/motioncaptcha-jquery-plugin/
+ * 
+ * Only these rules are absolutely necessary for the plugin.
+ * NB. The width & height of the canvas can be flexible to fit your layout but there's a recommended min/max
+ * - if you need it much bigger/smaller, you could tweak the background-positions of the shape classes.
+ */
+
+/* The canvas: */
+#mc-canvas {
+	width:440px;  /* For best results, set width to between 210px and 240px */
+	height:300px; /* For best results, set height to between 140px and 170px */
+	background:#fff -9999px -9999px no-repeat;
+        border: #333 1px solid;
+}
+
+/* Disable mouse-selection on the page (only while user is actively drawing on the canvas): */
+.mc-noselect {
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+}
