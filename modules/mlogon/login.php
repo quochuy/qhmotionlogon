@@ -53,7 +53,7 @@ if ($http -> hasSessionVariable('$_POST_BeforeLogin')) {
 	$http -> removeSessionVariable('$_POST_BeforeLogin');
 }
 
-if ($Module -> isCurrentAction('Login') and $Module -> hasActionParameter('UserLogin') and ($Module -> hasActionParameter('UserPassword') or $Module -> hasActionParameter('YubiKey')) and !$http -> hasPostVariable("RegisterButton")) {
+if ($Module -> isCurrentAction('Login') and $Module -> hasActionParameter('UserLogin') and ($Module -> hasActionParameter('UserPassword') or $Module -> hasActionParameter('UniStroke')) and !$http -> hasPostVariable("RegisterButton")) {
 	$userLogin = $Module -> actionParameter('UserLogin');
 	$userPassword = $Module -> actionParameter('UserPassword');
 	$userRedirectURI = $Module -> actionParameter('UserRedirectURI');

@@ -4,7 +4,6 @@
 PolicyOmitList[]=mlogon
 
 [SiteAccessSettings]
-AnonymousAccessList[]=mlogon/register
 AnonymousAccessList[]=mlogon/login
 
 [UserSettings]

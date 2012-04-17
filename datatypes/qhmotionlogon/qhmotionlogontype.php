@@ -1,29 +1,23 @@
 <?php
-//
-// Created on: <16-Apr-2012 12:14:36>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: QH Motion Logon for eZ Publish
-// COPYRIGHT NOTICE: Copyright (C) 2012-2013 NGUYEN DINH Quoc-Huy
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of version 2.0 of the GNU General
-// Public License as published by the Free Software Foundation.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of version 2.0 of the GNU General
-// Public License along with this program; if not, write to the Free
-// Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-// MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * QH Motion Logon extension for eZ Publish
+ * Written by NGUYEN DINH Quoc-Huy <contact@quoc-huy.com>
+ * Copyright (C) 2012, NGUYEN DINH Quoc-Huy.  All rights reserved.
+ * http://www.quoc-huy.com/
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ **/
 
 // Define the name of datatype string
 define("EZ_DATATYPESTRING_QHMOTIONLOGON", "qhmotionlogon");
@@ -48,14 +42,29 @@ class QHMotionLogonType extends eZDataType {
 	function validateObjectAttributeHTTPInput($http, $base, $objectAttribute) {
 
 		if ($http -> hasPostVariable($base . '_data_text_' . $objectAttribute -> attribute('id'))) {
-			$unistrokePoints = &$http -> postVariable($base . '_data_text_' . $objectAttribute -> attribute('id'));
+			$unistrokeString = &$http -> postVariable($base . '_data_text_' . $objectAttribute -> attribute('id'));
 			$classAttribute = &$objectAttribute -> contentClassAttribute();
-			if ($classAttribute -> attribute("is_required") == true) {
-				if ($unistrokePoints == "") {
+			
+			if($unistrokeString == "") {
+				if ($classAttribute -> attribute("is_required") == true) {
 					$objectAttribute -> setValidationError(ezi18n('content/datatypes', 'You need to draw a password.', 'eZQHMotionLogonType'));
 					return eZInputValidator::STATE_INVALID;
+				}	
+			}  else {
+				$unistrokesCoordinates = explode('/', $unistrokeString);
+
+				foreach ($unistrokesCoordinates as $k => $unistrokeCoordinate) {
+					list($x, $y) = explode(',', $unistrokeCoordinate);
+					$unistrokePoints[$k]['x'] = $x;
+					$unistrokePoints[$k]['y'] = $y;
 				}
+		
+				$recognizer = new phpDollar();						 
+				$result = $recognizer -> recognizeStroke($unistrokePoints);
+				
+				eZLog::write(var_export($result, true));
 			}
+
 		}
 		return eZInputValidator::STATE_ACCEPTED;
 	}

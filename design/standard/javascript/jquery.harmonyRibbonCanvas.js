@@ -1,5 +1,6 @@
 /*!
  * jQuery MotionCAPTCHA v0.2
+ * Modified by NGUYEN DINH Quoc-Huy
  * 
  * Proof of concept only for now, check the roadmap to see when it will be ready for wider use!
  * 
@@ -148,37 +149,20 @@ jQuery.fn.motionCaptcha || (function($) {
 					// Dollar Recognizer result:
 					if (_points.length >= 15) {
                                             
-//                                                var resultSelector = $('.php-results ul');
-//                                                resultSelector.html('');
-                        
                         var r = '';
                         
                         for(var i=0; i<_points.length; i++) {
                         	r += _points[i].X + ',' + _points[i].Y + '/';
-                        }			
+                        }
+                        
+                        console.log(r);			
                         
                         if($('#unistrokeedit').length>0) {
                         	$('#unistrokeedit').val(r + '&' + $canvas[0].toDataURL());
                         } else {
                         	$('#unistroke').val(r);
                         }
-                        
-                        /*$.post("index.php", {'points' : _points},
-                         function(data){
-                           $.each(data, function(index, value) { 
-                                resultSelector.append('<li><b>'+value['strokeName']+'</b>: '+value['strokeScore']+'</li>');
-                            });
-                         }, "json");
-						// Check result:
-						if ( result.Score > 3.1 ) {
-							
-							
-							// Call the onSuccess function to handle the rest of the business:
-							// Pass in the form, the canvas, the canvas context:
-							opts.onSuccess($form, $canvas, ctx);
-							
-						}
-						*/
+
 					} else { // fewer than 10 points were recorded:
 
 						
@@ -209,9 +193,6 @@ jQuery.fn.motionCaptcha || (function($) {
 			$canvas[0].addEventListener('touchstart', touchStartEvent, false);
 			$canvas[0].addEventListener('touchmove', touchMoveEvent, false);
 			$canvas[0].addEventListener('touchend', touchEndEvent, false);
-
-
-
 		
 			/**
 			 * Get X/Y mouse position, relative to (/inside) the canvas
@@ -382,19 +363,19 @@ jQuery.fn.motionCaptcha || (function($) {
 		}
 	};
 
-//
-// Point class
-//
-function Point(x, y)
-{
-	this.X = x;
-	this.Y = y;
-}
-
-// Wrapper for Point class (saves mega kb when compressing the template definitions):
-function NewPoint(x, y) {
-	return new Point(x, y)
-}
+	//
+	// Point class
+	//
+	function Point(x, y)
+	{
+		this.X = x;
+		this.Y = y;
+	}
+	
+	// Wrapper for Point class (saves mega kb when compressing the template definitions):
+	function NewPoint(x, y) {
+		return new Point(x, y)
+	}
 
 
 })(jQuery);

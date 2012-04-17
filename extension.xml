@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<software>
+    <metadata>
+        <name>QH Motion Logon</name>
+        <version>1.0alpha02</version>
+        <copyright>Copyright (C) 2012 NGUYEN DINH Quoc-Huy</copyright>
+        <license>GNU General Public License v2.0</license>
+    </metadata>
+
+    <dependencies>
+        <requires>
+            <extension name="ezjscore" />
+        </requires>
+    </dependencies>
+
+</software>
