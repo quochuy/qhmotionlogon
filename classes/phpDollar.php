@@ -11,7 +11,7 @@
  */
 class phpDollar{
     
-    private $_numPoints = 64;
+    private $_numPoints = 128;
     private $_squareSize = 250.0;
     private $_originPoint = array('x'=>0, 'y'=>0);
     /**

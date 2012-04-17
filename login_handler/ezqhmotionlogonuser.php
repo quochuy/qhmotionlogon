@@ -44,7 +44,6 @@ class eZQHMotionLogonUser extends eZUser {
 			$UnistrokePoints[$k]['y'] = $y;
 		}
 
-		//echo 'Points: ' . var_export($UnistrokePoints, true);
 		if ($debugOutput)
 			eZLog::write("Login handler, UnistrokePoints: {$UnistrokePoints}");
 
@@ -70,66 +69,13 @@ class eZQHMotionLogonUser extends eZUser {
 					 
 		$result = $recognizer -> recognizeStroke($UnistrokePoints);
 		
-		//var_export($recognizer->)
+		//var_export($result); exit;
 		
-		//echo $userUnistrokePoints;
-		//exit;
-
-		if ($result['strokeName'] != $login)
+		if ($result['strokeName'] != $login || $result['strokeScore'] < 3.1)
 		{
 			$user = false;
 			eZLog::write("QH Motion Login: gesture password doesn't match");
 		}
-		/*
-
-		 if( isset( $userDatamap['yubikeys'] )) {
-		 $matrix = new eZMatrix( '' );
-		 $matrix->decodeXML( $userDatamap['yubikeys']->attribute('data_text'));
-		 $userRecordedUnistrokePointsOTPArray = $matrix->Matrix['columns']['sequential'][1]['rows'];
-		 }
-
-		 $userUseOTP4MultiFactor = $userDatamap['multifactor']->attribute('data_int');
-
-		 $UnistrokePointsPrefix = substr($UnistrokePoints, 0, 12);
-
-		 $recordedMatchedPrefixes = array();
-		 foreach( $userRecordedUnistrokePointsOTPArray as $key => $userRecordedUnistrokePointsOTP ) {
-		 if( $debugOutput ) eZLog::write( "Yubikey{$key}: {$userRecordedUnistrokePointsOTP}");
-		 $recordedUnistrokePointsPrefix = substr( $userRecordedUnistrokePointsOTP, 0, 12 );
-		 if( $UnistrokePointsPrefix == $recordedUnistrokePointsPrefix) {
-		 if( $debugOutput ) eZLog::write( "key {$key}'s prefix matches" );
-		 $recordedMatchedPrefixes[] = $key;
-		 }
-		 }
-
-		 switch(true) {
-		 // if the use's set to use OTP as multifactor
-		 case ($userUseOTP4MultiFactor == 1):
-		 if( $debugOutput ) eZLog::write("Multifactor: {$userUseOTP4MultiFactor}");
-		 // if no key was submitted then don't allow login
-		 if(empty($UnistrokePoints)) $user = self::REQUIRE_MULTIFACTOR;
-		 // else return false to continue with the next login handler
-		 else $user = false;
-		 break;
-
-		 // if there is an OTP recorded and not set to multifactor but no UnistrokePoints submitted then don't allow login
-		 case (count($userRecordedUnistrokePointsOTPArray) && empty($UnistrokePoints)):
-		 if( $debugOutput ) eZLog::write("OTP set, no multifactor, no UnistrokePoints received");
-		 $user = self::REQUIRE_YUBIKEY_OTP;
-		 break;
-
-		 case (empty($UnistrokePoints)):
-		 case (empty($recordedMatchedPrefixes)):
-		 case (!count($userRecordedUnistrokePointsOTP)):
-		 if( $debugOutput ) eZLog::write("Auth denied");
-		 $user = false;
-		 break;
-
-		 default:
-		 if( $debugOutput ) eZLog::write("Looks OK!");
-		 break;
-		 }
-		 */
 
 		return $user;
 	}
