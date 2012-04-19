@@ -38,6 +38,27 @@ $ViewList['login'] = array(
                                                          'UniStroke' => 'UniStroke',
                                                          'UserRedirectURI' => 'RedirectURI' ) ),
     'params' => array( ) );
+	
+$ViewList['test'] = array(
+    'functions' => array( 'login' ),
+    'script' => 'test.php',
+    'ui_context' => 'authentication',
+    'params' => array( ) );
+	
+$ViewList['testprocess'] = array(
+    'functions' => array( 'login' ),
+    'script' => 'testprocess.php',
+    'ui_context' => 'authentication',
+    'default_action' => array( array( 'name' => 'Login',
+                                      'type' => 'post',
+                                      'parameters' => array( 'Login',
+                                                             'Password' ) ) ),
+    'single_post_actions' => array( 'LoginButton' => 'Login' ),
+    'post_action_parameters' => array( 'Login' => array( 'UserLogin' => 'Login',
+                                                         'UserPassword' => 'Password',
+                                                         'UniStroke' => 'UniStroke',
+                                                         'UserRedirectURI' => 'RedirectURI' ) ),
+    'params' => array( ) );
 
 
 $SiteAccess = array(

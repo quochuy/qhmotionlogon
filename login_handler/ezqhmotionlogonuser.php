@@ -32,14 +32,14 @@ class eZQHMotionLogonUser extends eZUser {
 		$unistrokeString = $password;
 		$unistrokesCoordinates = explode('/', $unistrokeString);
 
+		// convert string to array of points
 		foreach ($unistrokesCoordinates as $k => $unistrokeCoordinate) {
 			list($x, $y) = explode(',', $unistrokeCoordinate);
-			$UnistrokePoints[$k]['x'] = (float)$x;
-			$UnistrokePoints[$k]['y'] = (float)$y;
+			if ($x && $y) {
+				$UnistrokePoints[$k]['x'] = $x;
+				$UnistrokePoints[$k]['y'] = $y;
+			}
 		}
-
-		if ($debugOutput)
-			eZLog::write("Login handler, UnistrokePoints: {$UnistrokePoints}");
 
 		$recognizer = new phpDollar();
 
@@ -47,20 +47,25 @@ class eZQHMotionLogonUser extends eZUser {
 		$userContentObject = eZContentObject::fetch($user -> attribute('contentobject_id'));
 		$userDatamap = $userContentObject -> dataMap();
 		list($userUnistrokePointString) = explode('&', $userDatamap['unistroke']->attribute('data_text'));
-		//echo $userUnistrokePointString;
 		
 		$userUnistrokePointsCoordinates = explode('/', $userUnistrokePointString);
 		$userUnistrokePoints = array();
+		
 		foreach($userUnistrokePointsCoordinates as $k=>$userUnistrokePointCoordinates) {
 			list($x, $y) = explode(',', $userUnistrokePointCoordinates);
-			$userUnistrokePoints[$k]['x'] = $x;
-			$userUnistrokePoints[$k]['y'] = $y;
+			if ($x && $y) {
+				$userUnistrokePoints[$k]['x'] = $x;
+				$userUnistrokePoints[$k]['y'] = $y;
+			}
 		}
+		
+		// sets the user's doodle as a template
 		$recognizer->addTemplate(
 						$login,
 						$userUnistrokePoints
 					 );
-					 
+		
+	
 		$result = $recognizer -> recognizeStroke($UnistrokePoints);
 		
 		if ($result['strokeName'] != $login || $result['strokeScore'] < 3.1)

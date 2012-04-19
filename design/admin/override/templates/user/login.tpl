@@ -73,7 +73,7 @@
 {literal}
     <script type="text/javascript">
         $(document).ready(function(){
-            $('#mlogon').motionCaptcha({brushColor: [225, 225, 225], clearAfter: true});
+            $('#mlogon').motionCanvas({brushColor: [225, 225, 225], clearAfter: true});
         });
     </script>
 {/literal}

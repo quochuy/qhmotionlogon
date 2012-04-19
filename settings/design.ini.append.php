@@ -4,9 +4,14 @@
 DesignExtensions[]=qhmotionlogon
 
 [JavaScriptSettings]
-BackendJavaScriptList[]=jquery.harmonyRibbonCanvas.js
+FrontendJavaScriptList[]=ezjsc::jquery
+FrontendJavaScriptList[]=jquery.motionCanvas.js
+
+BackendJavaScriptList[]=ezjsc::jquery
+BackendJavaScriptList[]=jquery.motionCanvas.js
 
 [StylesheetSettings]
+FrontendCSSFileList[]=qhmotionlogon.css
 BackendCSSFileList[]=qhmotionlogon.css
 
 */ ?>

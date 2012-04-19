@@ -8,7 +8,7 @@
 {literal}
     <script type="text/javascript">
         $(document).ready(function(){
-            $('#mlogon').motionCaptcha();
+            $('#mlogon').motionCanvas();
             
             var canvas = $('#mc-canvas')[0];
             var context = canvas.getContext('2d');
